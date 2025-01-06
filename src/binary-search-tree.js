@@ -86,18 +86,75 @@ class BinarySearchTree {
     // remove line with error and write your code here
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
+  remove(data) {
+    let index = this.root_node
+    let tail = index
+    while (true) {
+      if (index.data === data) break
+      if (data < index.data) {
+        if (index.left) {
+          tail = index
+          index = index.left
+        }
+        else { return null }
+      }
+      else {
+        if (index.right) {
+          tail = index
+          index = index.right
+        }
+        else { return null }
+      }
+    }
+    let replacement = index
+    if (!replacement.left && !replacement.right) {
+      if (index.data < tail.data) tail.left = null
+      else if (index.data > tail.data) tail.right = null
+    }
+    else if (!replacement.left) {
+      if (index.data < tail.data) tail.left = replacement.right
+      else if (index.data > tail.data) tail.right = replacement.right
+      index.right = null
+    }
+    else if (!replacement.right) {
+      if (index.data < tail.data) tail.left = replacement.left
+      else if (index.data > tail.data) tail.right = replacement.left
+      index.left = null
+    }
+    else {
+      replacement = index.left
+      tail = index
+      while (true) {
+        if (replacement.right) {
+          tail = replacement
+          replacement = replacement.right
+        }
+        else {
+          index.data = replacement.data
+          if (index.data < tail.data) tail.left = replacement.left
+          else if (index.data > tail.data) tail.right = replacement.left
+          break
+        }
+      }
+    }
     // remove line with error and write your code here
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
+    let index = this.root_node
+    while (true) {
+      if (index.left) index = index.left
+      else return index.data
+    }
     // remove line with error and write your code here
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
+    let index = this.root_node
+    while (true) {
+      if (index.right) index = index.right
+      else return index.data
+    }
     // remove line with error and write your code here
   }
 }
